@@ -24,9 +24,16 @@ def test_accuracy(model, dataloader):
     # すべてのミニバッチに対して推論をし、正確律を計算する
     n_corrects = 0 # 正解の個数
 
+    # モデルのデバイスを調べる
+    device = next(model.parameters()).device
+
     model.eval()
     with torch.no_grad():
         for image_batch, label_batch in dataloader:
+            # バッチを、　model と同じデバイスに転送する
+            image_batch = image_batch.to(device)
+            label_batch = label_batch.to(device)
+
             # モデルに入れて結果 logits を出す
             logits_batch = model(image_batch)
 
@@ -60,9 +67,16 @@ def test(model, dataloader, loss_fn):
     """1エポック分のロスを計算"""
     loss_total = 0.0  # ロスの合計
 
+    # モデルのデバイスを調べる
+    device = next(model.parameters()).device
+
     model.eval()
     with torch.no_grad():
         for image_batch, label_batch in dataloader:
+             # バッチを、　model と同じデバイスに転送する
+            image_batch = image_batch.to(device)
+            label_batch = label_batch.to(device)
+
             # モデルにバッチを入れて、ロジットを計算
             logits_batch = model(image_batch)
 
