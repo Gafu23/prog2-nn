@@ -18,7 +18,7 @@ ds_transform = transforms.Compose([
 ds_train = datasets.FashionMNIST(
     root='data',
     train=True,  # 訓練用を指定
-    download=True
+    download=True,
     transform=ds_transform
 )
 
